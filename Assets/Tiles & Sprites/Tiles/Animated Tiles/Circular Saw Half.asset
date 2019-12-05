@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Circular Saw Half
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: ff5511f065add2944ac16b385c449d17, type: 3}
+  - {fileID: 21300000, guid: f30938451ef9b3e41a3dcff51110b3e7, type: 3}
+  - {fileID: 21300000, guid: b8e820ae65178d84abc088bedd7d7a50, type: 3}
+  - {fileID: 21300000, guid: 54350a40148ec5a4aaebb8494637148c, type: 3}
+  - {fileID: 21300000, guid: 343413df885ee114e844dd01fd800f0c, type: 3}
+  - {fileID: 21300000, guid: 422c4896333dd78488c4d9af007a653b, type: 3}
+  m_MinSpeed: 30
+  m_MaxSpeed: 30
+  m_AnimationStartTime: 0
+  m_TileColliderType: 1
