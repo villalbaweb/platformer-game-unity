@@ -43,7 +43,7 @@ public class Coin : MonoBehaviour
     {
         if (!_takenSFX) { return; }
 
-        AudioSource.PlayClipAtPoint(_takenSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(_takenSFX, Camera.main.transform.position, 0.25f);
     }
 
     private void CreateCoinParent()
