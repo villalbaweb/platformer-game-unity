@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     // State
     float originalGravityScale;
     bool isAlive;
+    List<string> lethalLayers;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
 
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
+        lethalLayers = new List<string> { "Troll Enemy", "Obstacles" };
     }
 
     // Update is called once per frame
@@ -126,7 +128,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        if (_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Troll Enemy", "Obstacles")))
+        if (_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask(lethalLayers.ToArray())) || _feetBoxCollider2D.IsTouchingLayers(LayerMask.GetMask(lethalLayers.ToArray())))
         {
             StartCoroutine(DieHandler());
         }
