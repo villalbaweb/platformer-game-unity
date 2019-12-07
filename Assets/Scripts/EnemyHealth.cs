@@ -14,11 +14,15 @@ public class EnemyHealth : MonoBehaviour
 
     // Cache
     Animator _animator;
+    CapsuleCollider2D _mainBodyCollider2D;
+    BoxCollider2D _feetCollider2D;
     bool isDead;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _mainBodyCollider2D = GetComponent<CapsuleCollider2D>();
+        _feetCollider2D = GetComponent<BoxCollider2D>();
         isDead = false;
     }
 
@@ -39,6 +43,8 @@ public class EnemyHealth : MonoBehaviour
     IEnumerator DieVFX()
     {
         isDead = true;
+        _mainBodyCollider2D.enabled = false;
+        _feetCollider2D.enabled = false;
         _animator.SetTrigger("Die");
         PlayDieSFX();
         yield return new WaitForSeconds(0.5f);
