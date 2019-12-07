@@ -62,7 +62,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (!dieAudioSFX) { return; }
 
-        AudioSource.PlayClipAtPoint(dieAudioSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(dieAudioSFX, Camera.main.transform.position, 0.5f);
     }
 
     public void TakeDamage(int damage)
