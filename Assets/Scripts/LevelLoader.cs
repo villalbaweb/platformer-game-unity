@@ -11,13 +11,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        // try to find ScenePSerist Game Object if found delete it and let the new
-        // level create another object if required
-        ScenePersist scenePersistObject = FindObjectOfType<ScenePersist>();
-        if (scenePersistObject)
-        {
-            Destroy(scenePersistObject.gameObject);
-        }
+        DeleteScenePersistObject();
 
         if (!loadSpecificLevel)    // Normal flow
         {
@@ -33,6 +27,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
+        DeleteScenePersistObject();
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -42,13 +37,21 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
 
-    public int GetCurrentSceneIndex()
-    {
-        return SceneManager.GetActiveScene().buildIndex;
-    }
-
     public void LoadSpecificLevel(int level)
     {
+
+        DeleteScenePersistObject();
         SceneManager.LoadScene(level);
+    }
+
+    private void DeleteScenePersistObject()
+    {
+        // try to find ScenePSerist Game Object if found delete it and let the new
+        // level create another object if required
+        ScenePersist scenePersistObject = FindObjectOfType<ScenePersist>();
+        if (scenePersistObject)
+        {
+            Destroy(scenePersistObject.gameObject);
+        }
     }
 }
