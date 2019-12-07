@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
         Move();
     }
 
-    private void Move()
+    public void Move()
     {
         Vector2 playerVelocity;
         if (IsFacingRight())
@@ -45,6 +45,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        transform.localScale = new Vector2(-(Mathf.Sign(_rigidbody2D.velocity.x)), 1f);
+    }
+
+    public void ChangeMovingDirection()
+    {
+        Debug.Log("Changin direction...");
         transform.localScale = new Vector2(-(Mathf.Sign(_rigidbody2D.velocity.x)), 1f);
     }
 }
