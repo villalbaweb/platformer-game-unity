@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
-        lethalLayers = new List<string> { "Troll Enemy", "Obstacles" };
+        lethalLayers = new List<string> { "Ghost Enemy", "Troll Enemy", "Obstacles" };
     }
 
     // Update is called once per frame
