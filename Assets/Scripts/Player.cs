@@ -188,6 +188,7 @@ public class Player : MonoBehaviour
 
     public void ShootButtonHit()
     {
+        if(!isAlive) { return; }
         _animator.SetTrigger("Shoot");
         PlayShootSFX();
     }
