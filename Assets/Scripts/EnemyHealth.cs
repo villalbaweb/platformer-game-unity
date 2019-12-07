@@ -43,8 +43,15 @@ public class EnemyHealth : MonoBehaviour
     IEnumerator DieVFX()
     {
         isDead = true;
-        _mainBodyCollider2D.enabled = false;
-        _feetCollider2D.enabled = false;
+        if(_mainBodyCollider2D)
+        {
+            _mainBodyCollider2D.enabled = false;
+        }
+
+        if(_feetCollider2D)
+        {
+            _feetCollider2D.enabled = false;
+        }
         _animator.SetTrigger("Die");
         PlayDieSFX();
         yield return new WaitForSeconds(0.5f);
