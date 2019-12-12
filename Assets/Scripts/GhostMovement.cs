@@ -19,7 +19,6 @@ public class GhostMovement : EnemyMovement
         timeToTurn -= Time.deltaTime;
         if (timeToTurn < Mathf.Epsilon)
         {
-            Debug.Log("Turn");
             timeToTurn = initialTimeToTurn;
             base.ChangeMovingDirection();
         }

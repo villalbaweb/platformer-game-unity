@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     // Config params
     [Header("Movement")]
-    [SerializeField] float runSpeed = 5f;
+    [SerializeField] float runSpeed = 1.0f;
     [SerializeField] float climLadderSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float walkRunThreshold = 0.25f;
@@ -110,11 +110,7 @@ public class Player : MonoBehaviour
     {
         float absoluteSpeed = Mathf.Abs(horizontalSpeed);
 
-        bool isWalking = absoluteSpeed > 0f && absoluteSpeed <= walkRunThreshold;
-        bool isRunning = absoluteSpeed > walkRunThreshold;
-
-        _animator.SetBool("IsWalking", isWalking);
-        _animator.SetBool("IsRunning", isRunning);
+        _animator.SetFloat("Speed", absoluteSpeed / runSpeed);
     }
 
     private void FlipSprite()
