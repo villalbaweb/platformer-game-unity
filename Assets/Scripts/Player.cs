@@ -10,8 +10,9 @@ public class Player : MonoBehaviour
     [SerializeField] float runSpeed = 1.0f;
     [SerializeField] float climLadderSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
-    [SerializeField] float walkRunThreshold = 0.25f;
     [SerializeField] Vector2 deathHit = new Vector2(0f, 15f);
+    [SerializeField] float slideSpeed = 15.0f;
+    [SerializeField] float slideTime = 0.5f;
 
     [Header("Player Death Handler")]
     [SerializeField] int timeToWaitWhendDie = 2;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     // State
     float originalGravityScale;
     bool isAlive;
+    bool isSliding;
     List<string> lethalLayers;
 
     // Start is called before the first frame update
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
 
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
+        isSliding = false;
         lethalLayers = new List<string> { "Ghost Enemy", "Troll Enemy", "Obstacles" };
     }
 
@@ -57,10 +60,29 @@ public class Player : MonoBehaviour
     {
         if (!isAlive) { return; }
 
+        Slide();
         Run();
         Climb();
         FlipSprite();
         Die();
+    }
+
+    private void Slide()
+    {
+        if(!_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders")) && _joystick.Vertical <= -0.80 && !isSliding)
+        {
+            StartCoroutine(SlideControl());
+        }
+    }
+
+    IEnumerator SlideControl()
+    {
+        isSliding = true;
+        _animator.SetTrigger("Slide");
+
+        _rigidbody2D.velocity = new Vector2(Mathf.Sign(_rigidbody2D.velocity.x) * slideSpeed, _rigidbody2D.velocity.y);
+        yield return new WaitForSeconds(slideTime);
+        isSliding = false;
     }
 
     private void Climb()
@@ -89,6 +111,8 @@ public class Player : MonoBehaviour
 
     private void Run()
     {
+        if (isSliding) { return; }
+
         // we dont use Time.deltaTime because we are applying this value
         // to rigidBody2D and this is handled by the physics engine which calculates delta time by itself.
         // when using transform based movement, then we need Time.deltaTime
