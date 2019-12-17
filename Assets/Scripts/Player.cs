@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     BoxCollider2D _feetBoxCollider2D;
     GameObject _playerBody;
     GameSession _gameSession;
+    ParticleSystem _dustParticleSystem;
 
     // State
     float originalGravityScale;
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
         _feetBoxCollider2D = GetComponent<BoxCollider2D>();
         _playerBody = transform.GetChild(0).gameObject; // get a game object child
         _gameSession = FindObjectOfType<GameSession>();
+        _dustParticleSystem = transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
 
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour
     {
         isSliding = true;
         _animator.SetTrigger("Slide");
+        _dustParticleSystem.Play();
 
         _rigidbody2D.velocity = new Vector2(Mathf.Sign(_rigidbody2D.velocity.x) * slideSpeed, _rigidbody2D.velocity.y);
         yield return new WaitForSeconds(slideTime);
