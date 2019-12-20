@@ -82,7 +82,6 @@ public class PlayerSlider : MonoBehaviour
     {
         if(!isSliding) { return; }
 
-        Debug.Log($"OnCollisionEnter.. {collision.gameObject.name}");
         EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
         if (enemyHealth)
         {
