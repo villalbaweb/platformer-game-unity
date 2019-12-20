@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] int health = 300;
 
     [Header("Audio Effects")]
-    [SerializeField] AudioClip dieAudioSFX;
+    [SerializeField] AudioClip dieAudioSFX = null;
 
     // Cache
     Animator _animator;

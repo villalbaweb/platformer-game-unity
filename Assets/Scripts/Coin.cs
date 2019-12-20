@@ -9,7 +9,7 @@ public class Coin : MonoBehaviour
     // Config Params
     [Header("Configurations")]
     [SerializeField] float timeToDestroyCoinAfterTaken = 0.5f;
-    [SerializeField] AudioClip _takenSFX;
+    [SerializeField] AudioClip _takenSFX = null;
 
     // Cache
     GameObject _pickupParent;

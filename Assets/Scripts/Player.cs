@@ -13,13 +13,14 @@ public class Player : MonoBehaviour
     [SerializeField] Vector2 deathHit = new Vector2(0f, 15f);
 
     [Header("Player Death Handler")]
+    [Tooltip("The damage caused to the enemies when sliding")]
     [SerializeField] int timeToWaitWhendDie = 2;
 
     [Header("Audio Effects")]
-    [SerializeField] AudioClip jumpAudioSFX;
-    [SerializeField] AudioClip dieAudioSFX;
-    [SerializeField] AudioClip lifeupAudioSFX;
-    [SerializeField] AudioClip shootAudioSFX;
+    [SerializeField] AudioClip jumpAudioSFX = null;
+    [SerializeField] AudioClip dieAudioSFX = null;
+    [SerializeField] AudioClip lifeupAudioSFX = null;
+    [SerializeField] AudioClip shootAudioSFX = null;
 
     // Cached components refs
     Joystick _joystick;
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     float originalGravityScale;
     bool isAlive;
     bool isMoveEnabled;
+    bool isDieEnabled;
     List<string> lethalLayers;
 
     // Start is called before the first frame update
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
         isMoveEnabled = true;
+        isDieEnabled = true;
         lethalLayers = new List<string> { "Ghost Enemy", "Troll Enemy", "Obstacles" };
     }
 
@@ -125,6 +128,8 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        if(!isDieEnabled) { return; }
+
         if (_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask(lethalLayers.ToArray())) || _feetBoxCollider2D.IsTouchingLayers(LayerMask.GetMask(lethalLayers.ToArray())))
         {
             StartCoroutine(DieHandler());
@@ -207,9 +212,14 @@ public class Player : MonoBehaviour
         PlayLifeUpSFX();
     }
 
-    public void SetIsMoveEnabled(bool _isSlading)
+    public void SetIsMoveEnabled(bool _isMoveEnabled)
     {
-        isMoveEnabled = _isSlading;
+        isMoveEnabled = _isMoveEnabled;
+    }
+
+    public void SetIsDieEnabled(bool _isDieEnabled)
+    {
+        isDieEnabled = _isDieEnabled;
     }
 
     #endregion

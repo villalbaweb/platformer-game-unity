@@ -6,8 +6,8 @@ public class PlayerShooter : MonoBehaviour
 {
     // Config Params
     [Header("Configuration")]
-    [SerializeField] GameObject projectile;
-    [SerializeField] GameObject gun;    // This will provide a position where to instantiate the projectile prefab from
+    [SerializeField] GameObject projectile = null;
+    [SerializeField] GameObject gun = null;    // This will provide a position where to instantiate the projectile prefab from
 
     // State
     GameObject _projectileParent;

@@ -12,7 +12,7 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField] float destroyAfter = 0.5f;
 
     [Header("Sound Effects")]
-    [SerializeField] AudioClip destroyAudioSFX;
+    [SerializeField] AudioClip destroyAudioSFX = null;
 
 
     // Cache

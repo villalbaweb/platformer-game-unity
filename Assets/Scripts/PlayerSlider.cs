@@ -9,6 +9,9 @@ public class PlayerSlider : MonoBehaviour
     [SerializeField] float slideSpeed = 15.0f;
     [SerializeField] float slideTime = 0.5f;
 
+    [Header("Slide Damage")]
+    [SerializeField] int damage = 1000;
+
     // Cached Components
     Joystick _joystick;
     Animator _animator;
@@ -51,28 +54,40 @@ public class PlayerSlider : MonoBehaviour
         }
     }
 
-    private void SetIsSliding(bool _isSliding)
-    {
-        isSliding = _isSliding;
-        _player.SetIsMoveEnabled(!_isSliding);
-    }
-
     IEnumerator SlideControl()
     {
         isSliding = true;
-        _player.SetIsMoveEnabled(false);
+        PlayerInteraction();
         SlidingSfxPlay();
 
         _rigidbody2D.velocity = new Vector2(Mathf.Sign(_rigidbody2D.velocity.x) * slideSpeed, _rigidbody2D.velocity.y);
         yield return new WaitForSeconds(slideTime);
         isSliding = false;
-        _player.SetIsMoveEnabled(true);
+        PlayerInteraction();
+    }
+
+    private void PlayerInteraction()
+    {
+        _player.SetIsMoveEnabled(!isSliding);
+        _player.SetIsDieEnabled(!isSliding);
     }
 
     private void SlidingSfxPlay()
     {
         _animator.SetTrigger("Slide");
         _dustParticleSystem.Play();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(!isSliding) { return; }
+
+        Debug.Log($"OnCollisionEnter.. {collision.gameObject.name}");
+        EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+        if (enemyHealth)
+        {
+            enemyHealth.TakeDamage(damage);
+        }
     }
 
 }
