@@ -4878,6 +4878,7 @@ GameObject:
   - component: {fileID: 471462203}
   - component: {fileID: 314183456}
   - component: {fileID: 1546666323}
+  - component: {fileID: 1427047955}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -4974,8 +4975,6 @@ MonoBehaviour:
   climLadderSpeed: 5
   jumpSpeed: 17
   deathHit: {x: 15, y: 15}
-  slideSpeed: 15
-  slideTime: 0.5
   timeToWaitWhendDie: 2
   jumpAudioSFX: {fileID: 8300000, guid: 05581986175e1634e8141d8a0e1707a4, type: 3}
   dieAudioSFX: {fileID: 8300000, guid: 5607e471e82d5fb408435ddfad91efb3, type: 3}
@@ -5022,3 +5021,17 @@ MonoBehaviour:
   projectile: {fileID: 6698092599917571371, guid: bd4ded70cb38f43419ba6fc71e8b24fc,
     type: 3}
   gun: {fileID: 1071325085}
+--- !u!114 &1427047955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770348657707227702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23493d5c16fe2a046905e700d9bed1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slideSpeed: 15
+  slideTime: 0.5

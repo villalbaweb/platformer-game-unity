@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] float climLadderSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] Vector2 deathHit = new Vector2(0f, 15f);
-    [SerializeField] float slideSpeed = 15.0f;
-    [SerializeField] float slideTime = 0.5f;
 
     [Header("Player Death Handler")]
     [SerializeField] int timeToWaitWhendDie = 2;
@@ -29,14 +27,12 @@ public class Player : MonoBehaviour
     Rigidbody2D _rigidbody2D;
     CapsuleCollider2D _bodyCapsuleCollider2D;
     BoxCollider2D _feetBoxCollider2D;
-    GameObject _playerBody;
     GameSession _gameSession;
-    ParticleSystem _dustParticleSystem;
 
     // State
     float originalGravityScale;
     bool isAlive;
-    bool isSliding;
+    bool isMoveEnabled;
     List<string> lethalLayers;
 
     // Start is called before the first frame update
@@ -47,13 +43,11 @@ public class Player : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _bodyCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         _feetBoxCollider2D = GetComponent<BoxCollider2D>();
-        _playerBody = transform.GetChild(0).gameObject; // get a game object child
         _gameSession = FindObjectOfType<GameSession>();
-        _dustParticleSystem = transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
 
         originalGravityScale = _rigidbody2D.gravityScale;
         isAlive = true;
-        isSliding = false;
+        isMoveEnabled = true;
         lethalLayers = new List<string> { "Ghost Enemy", "Troll Enemy", "Obstacles" };
     }
 
@@ -62,30 +56,10 @@ public class Player : MonoBehaviour
     {
         if (!isAlive) { return; }
 
-        Slide();
         Run();
         Climb();
         FlipSprite();
         Die();
-    }
-
-    private void Slide()
-    {
-        if(!_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders")) && _joystick.Vertical <= -0.80 && !isSliding)
-        {
-            StartCoroutine(SlideControl());
-        }
-    }
-
-    IEnumerator SlideControl()
-    {
-        isSliding = true;
-        _animator.SetTrigger("Slide");
-        _dustParticleSystem.Play();
-
-        _rigidbody2D.velocity = new Vector2(Mathf.Sign(_rigidbody2D.velocity.x) * slideSpeed, _rigidbody2D.velocity.y);
-        yield return new WaitForSeconds(slideTime);
-        isSliding = false;
     }
 
     private void Climb()
@@ -114,7 +88,7 @@ public class Player : MonoBehaviour
 
     private void Run()
     {
-        if (isSliding) { return; }
+        if (!isMoveEnabled) { return; }
 
         // we dont use Time.deltaTime because we are applying this value
         // to rigidBody2D and this is handled by the physics engine which calculates delta time by itself.
@@ -231,6 +205,11 @@ public class Player : MonoBehaviour
     public void LifeUp()
     {
         PlayLifeUpSFX();
+    }
+
+    public void SetIsMoveEnabled(bool _isSlading)
+    {
+        isMoveEnabled = _isSlading;
     }
 
     #endregion
