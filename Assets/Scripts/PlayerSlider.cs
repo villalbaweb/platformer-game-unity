@@ -14,6 +14,7 @@ public class PlayerSlider : MonoBehaviour
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     CapsuleCollider2D _bodyCapsuleCollider2D;
+    BoxCollider2D _feetBoxCollider2D;
     ParticleSystem _dustParticleSystem;
     Player _player;
 
@@ -27,6 +28,7 @@ public class PlayerSlider : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _bodyCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        _feetBoxCollider2D = GetComponent<BoxCollider2D>();
         _dustParticleSystem = transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         _player = GetComponent<Player>();
 
@@ -41,7 +43,9 @@ public class PlayerSlider : MonoBehaviour
 
     private void Slide()
     {
-        if (!_bodyCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders")) && _joystick.Vertical <= -0.80 && !isSliding)
+        bool isSlidingEnabled = _feetBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")) && _joystick.Vertical <= -0.80 && !isSliding;
+
+        if (isSlidingEnabled)
         {
             StartCoroutine(SlideControl());
         }
