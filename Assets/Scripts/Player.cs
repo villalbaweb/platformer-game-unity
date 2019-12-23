@@ -184,6 +184,8 @@ public class Player : MonoBehaviour
             return;
         }
 
+        _animator.SetTrigger("Jump");
+
         PlayJumpSFX();
         Vector2 jumpVelocityToAdd = new Vector2(0f, jumpSpeed);
         _rigidbody2D.velocity += jumpVelocityToAdd;
